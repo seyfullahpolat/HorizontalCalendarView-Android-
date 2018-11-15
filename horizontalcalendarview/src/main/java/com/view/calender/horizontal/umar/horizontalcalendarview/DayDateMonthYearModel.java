@@ -11,4 +11,5 @@ public class DayDateMonthYearModel {
     public String day;
     public String monthNumeric;
     public Boolean isToday;
+    public Boolean isIndicator;
 }

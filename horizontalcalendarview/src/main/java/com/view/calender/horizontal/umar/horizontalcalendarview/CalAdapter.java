@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
@@ -31,12 +32,12 @@ public class CalAdapter extends RecyclerView.Adapter<CalAdapter.MyViewHolder> {
     ArrayList<TextView> dayArrayList = new ArrayList<>();
     ArrayList<View> dividerArrayList = new ArrayList<>();
 
-    public CalAdapter(Context context  , ArrayList<DayDateMonthYearModel> dayModelList   ){
+    public CalAdapter(Context context, ArrayList<DayDateMonthYearModel> dayModelList) {
         this.context = context;
-        this.dayModelList  = dayModelList;
+        this.dayModelList = dayModelList;
     }
 
-    public void setCallback(Object toCallBack){
+    public void setCallback(Object toCallBack) {
         this.toCallBack = toCallBack;
     }
 
@@ -44,14 +45,15 @@ public class CalAdapter extends RecyclerView.Adapter<CalAdapter.MyViewHolder> {
         public TextView day, date;
         public ImageView haveAppointment;
         public View divider;
+        public TextView indicator;
 
         public MyViewHolder(View view) {
             super(view);
-            day =  view.findViewById(R.id.day);
-            date =  view.findViewById(R.id.date);
-            haveAppointment =  view.findViewById(R.id.have_appointment);
-            divider =  view.findViewById(R.id.divider);
-
+            day = view.findViewById(R.id.day);
+            date = view.findViewById(R.id.date);
+            haveAppointment = view.findViewById(R.id.have_appointment);
+            divider = view.findViewById(R.id.divider);
+            indicator = view.findViewById(R.id.indicator);
         }
     }
 
@@ -59,14 +61,14 @@ public class CalAdapter extends RecyclerView.Adapter<CalAdapter.MyViewHolder> {
     public CalAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.custom_day_layout, parent, false);
-        return  new CalAdapter.MyViewHolder(itemView);
+        return new CalAdapter.MyViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
         char t = dayModelList.get(position).day.charAt(0);
 
-        if(dayModelList.get(position).isToday==true){
+        if (dayModelList.get(position).isToday == true) {
             holder.date.setBackground(context.getResources().getDrawable(R.drawable.currect_date_background));
             try {
                 CallBack cb = new CallBack(toCallBack, "newDateSelected");
@@ -89,22 +91,27 @@ public class CalAdapter extends RecyclerView.Adapter<CalAdapter.MyViewHolder> {
         holder.day.setTextColor(context.getResources().getColor(color));
         holder.date.setTextColor(context.getResources().getColor(color));
         holder.divider.setBackgroundColor(context.getResources().getColor(color));
+        if (dayModelList.get(position).isIndicator) {
+            holder.indicator.setVisibility(View.VISIBLE);
+        } else
+            holder.indicator.setVisibility(View.GONE);
+
         holder.date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int pos = Integer.valueOf( v.getTag().toString());
-                if(clickedTextView==null) {
+                int pos = Integer.valueOf(v.getTag().toString());
+                if (clickedTextView == null) {
                     clickedTextView = (TextView) v;
                     clickedTextView.setBackground(context.getResources().getDrawable(R.drawable.background_selected_day));
                     clickedTextView.setTextColor(context.getResources().getColor(R.color.white));
                     clickedTextView.setTypeface(clickedTextView.getTypeface(), Typeface.NORMAL);
-                }else{
+                } else {
 //                    if(!dayModelList.get(pos).isToday) {
-                    if(lastDaySelected!=null && lastDaySelected.isToday){
+                    if (lastDaySelected != null && lastDaySelected.isToday) {
                         clickedTextView.setBackground(context.getResources().getDrawable(R.drawable.currect_date_background));
                         clickedTextView.setTextColor(context.getResources().getColor(R.color.white));
                         clickedTextView.setTypeface(clickedTextView.getTypeface(), Typeface.NORMAL);
-                    }else{
+                    } else {
                         clickedTextView.setBackground(null);
                         clickedTextView.setTextColor(context.getResources().getColor(R.color.grayTextColor));
                         clickedTextView.setTypeface(clickedTextView.getTypeface(), Typeface.NORMAL);
@@ -127,8 +134,7 @@ public class CalAdapter extends RecyclerView.Adapter<CalAdapter.MyViewHolder> {
                 }
 
 
-                lastDaySelected=dayModelList.get(pos);
-
+                lastDaySelected = dayModelList.get(pos);
 
 
             }
@@ -161,9 +167,9 @@ public class CalAdapter extends RecyclerView.Adapter<CalAdapter.MyViewHolder> {
     }
 
 
-    public void changeAccent(int color ){
+    public void changeAccent(int color) {
         this.color = color;
-        for(int i = 0 ; i < dateArrayList.size()  ; i++){
+        for (int i = 0; i < dateArrayList.size(); i++) {
             dayArrayList.get(i).setTextColor(context.getResources().getColor(color));
             dateArrayList.get(i).setTextColor(context.getResources().getColor(color));
             dividerArrayList.get(i).setBackgroundColor(context.getResources().getColor(color));

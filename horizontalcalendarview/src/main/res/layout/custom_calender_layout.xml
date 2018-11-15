@@ -1,47 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="10"
-    android:id="@+id/main_background"
-    android:orientation="horizontal"
-    android:background="@color/appointmentGray"
-    >
+    android:background="#7282c6"
+    android:orientation="horizontal">
+
     <LinearLayout
         android:id="@+id/swipe_left"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_weight="1.5"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp">
+        android:padding="12dp">
+
         <ImageView
             android:id="@+id/left_image_view"
-            app:srcCompat="@drawable/ic_appointment_back"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/ic_keyboard_arrow_left_red_500_24dp" />
 
     </LinearLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="7">
+        android:layout_weight="1">
 
     </android.support.v7.widget.RecyclerView>
+
     <LinearLayout
         android:id="@+id/swipe_right"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_weight="1.5"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"
-        >
+        android:padding="12dp">
+
         <ImageView
             android:id="@+id/right_image_view"
-            app:srcCompat="@drawable/ic_appointment_next"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/ic_keyboard_arrow_right_red_500_24dp" />
     </LinearLayout>
 
 </LinearLayout>
