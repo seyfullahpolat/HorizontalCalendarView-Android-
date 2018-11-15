@@ -113,7 +113,7 @@ public class CalAdapter extends RecyclerView.Adapter<CalAdapter.MyViewHolder> {
                         clickedTextView.setTypeface(clickedTextView.getTypeface(), Typeface.NORMAL);
                     } else {
                         clickedTextView.setBackground(null);
-                        clickedTextView.setTextColor(context.getResources().getColor(R.color.grayTextColor));
+                       // clickedTextView.setTextColor(context.getResources().getColor(R.color.grayTextColor));
                         clickedTextView.setTypeface(clickedTextView.getTypeface(), Typeface.NORMAL);
                     }
                     clickedTextView = (TextView) v;
