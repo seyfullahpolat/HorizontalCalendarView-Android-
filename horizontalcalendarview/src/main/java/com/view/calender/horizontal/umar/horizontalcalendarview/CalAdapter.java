@@ -41,20 +41,6 @@ public class CalAdapter extends RecyclerView.Adapter<CalAdapter.MyViewHolder> {
         this.toCallBack = toCallBack;
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView day, date;
-        public ImageView haveAppointment;
-        public TextView indicator;
-
-        public MyViewHolder(View view) {
-            super(view);
-            day = view.findViewById(R.id.day);
-            date = view.findViewById(R.id.date);
-            haveAppointment = view.findViewById(R.id.have_appointment);
-             indicator = view.findViewById(R.id.indicator);
-        }
-    }
-
     @Override
     public CalAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
@@ -85,14 +71,18 @@ public class CalAdapter extends RecyclerView.Adapter<CalAdapter.MyViewHolder> {
         holder.date.setTag(position);
         dateArrayList.add(holder.date);
         dayArrayList.add(holder.day);
-       // dividerArrayList.add(holder.divider);
-        holder.day.setTextColor(context.getResources().getColor(color));
+        // dividerArrayList.add(holder.divider);
+        // holder.day.setTextColor(context.getResources().getColor(color));
         holder.date.setTextColor(context.getResources().getColor(color));
-       // holder.divider.setBackgroundColor(context.getResources().getColor(color));
-        if (dayModelList.get(position).isIndicator) {
-            holder.indicator.setVisibility(View.VISIBLE);
+        // holder.divider.setBackgroundColor(context.getResources().getColor(color));
+        if (dayModelList.get(position).isSelected) {
+            holder.date.setTextColor(context.getResources().getColor(R.color.clicked_day_text_color));
+            holder.date.setBackground(context.getResources().getDrawable(R.drawable.background_selected_day));
+            holder.date.setTextColor(context.getResources().getColor(R.color.clicked_day_text_color));
+            clickedTextView.setTypeface(clickedTextView.getTypeface(), Typeface.NORMAL);
+            dayModelList.get(position).isSelected = false;
         } else
-            holder.indicator.setVisibility(View.GONE);
+            holder.date.setTextColor(context.getResources().getColor(R.color.white));
 
         holder.date.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,7 +91,8 @@ public class CalAdapter extends RecyclerView.Adapter<CalAdapter.MyViewHolder> {
                 if (clickedTextView == null) {
                     clickedTextView = (TextView) v;
                     clickedTextView.setBackground(context.getResources().getDrawable(R.drawable.background_selected_day));
-                    clickedTextView.setTextColor(context.getResources().getColor(R.color.white));
+                    clickedTextView.setTextColor(context.getResources().getColor(R.color.clicked_day_text_color));
+                    dayModelList.get(pos).isSelected = true;
                     clickedTextView.setTypeface(clickedTextView.getTypeface(), Typeface.NORMAL);
                 } else {
 //                    if(!dayModelList.get(pos).isToday) {
@@ -111,15 +102,16 @@ public class CalAdapter extends RecyclerView.Adapter<CalAdapter.MyViewHolder> {
                         clickedTextView.setTypeface(clickedTextView.getTypeface(), Typeface.NORMAL);
                     } else {
                         clickedTextView.setBackground(null);
-                       // clickedTextView.setTextColor(context.getResources().getColor(R.color.grayTextColor));
+                        // clickedTextView.setTextColor(context.getResources().getColor(R.color.grayTextColor));
+                        dayModelList.get(pos).isSelected = true;
                         clickedTextView.setTypeface(clickedTextView.getTypeface(), Typeface.NORMAL);
                     }
                     clickedTextView = (TextView) v;
                     clickedTextView.setBackground(context.getResources().getDrawable(R.drawable.background_selected_day));
-                    clickedTextView.setTextColor(context.getResources().getColor(R.color.white));
+                    clickedTextView.setTextColor(context.getResources().getColor(R.color.clicked_day_text_color));
                     clickedTextView.setTypeface(clickedTextView.getTypeface(), Typeface.NORMAL);
                 }
-
+                notifyDataSetChanged();
                 try {
                     CallBack cb = new CallBack(toCallBack, "newDateSelected");
                     cb.invoke(dayModelList.get(pos));
@@ -130,8 +122,6 @@ public class CalAdapter extends RecyclerView.Adapter<CalAdapter.MyViewHolder> {
                 } catch (NoSuchMethodException e) {
                     e.printStackTrace();
                 }
-
-
                 lastDaySelected = dayModelList.get(pos);
 
 
@@ -140,7 +130,6 @@ public class CalAdapter extends RecyclerView.Adapter<CalAdapter.MyViewHolder> {
 
 
     }
-
 
     @Override
     public int getItemCount() {
@@ -164,13 +153,26 @@ public class CalAdapter extends RecyclerView.Adapter<CalAdapter.MyViewHolder> {
         super.onViewDetachedFromWindow(holder);
     }
 
-
     public void changeAccent(int color) {
         this.color = color;
         for (int i = 0; i < dateArrayList.size(); i++) {
             dayArrayList.get(i).setTextColor(context.getResources().getColor(color));
             dateArrayList.get(i).setTextColor(context.getResources().getColor(color));
             dividerArrayList.get(i).setBackgroundColor(context.getResources().getColor(color));
+        }
+    }
+
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+        public TextView day, date;
+        public ImageView haveAppointment;
+        public TextView indicator;
+
+        public MyViewHolder(View view) {
+            super(view);
+            day = view.findViewById(R.id.day);
+            date = view.findViewById(R.id.date);
+            haveAppointment = view.findViewById(R.id.have_appointment);
+            indicator = view.findViewById(R.id.indicator);
         }
     }
 

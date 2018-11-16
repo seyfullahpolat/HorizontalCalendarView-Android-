@@ -12,4 +12,6 @@ public class DayDateMonthYearModel {
     public String monthNumeric;
     public Boolean isToday;
     public Boolean isIndicator;
+    public Boolean isSelected = false;
+
 }

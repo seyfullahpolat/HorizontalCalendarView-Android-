@@ -4,4 +4,5 @@
     <color name="grayTextColor">#807eb0</color>
     <color name="black">#000000</color>
     <color name="white">#ffffff</color>
+    <color name="clicked_day_text_color">#ff4b71</color>
 </resources>
