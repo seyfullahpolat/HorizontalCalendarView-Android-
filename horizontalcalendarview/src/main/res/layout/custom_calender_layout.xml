@@ -4,7 +4,7 @@
     android:id="@+id/main_background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#7282c6"
+    android:background="#0089a6ff"
     android:orientation="horizontal">
 
     <LinearLayout
@@ -15,9 +15,9 @@
 
         <ImageView
             android:id="@+id/left_image_view"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            app:srcCompat="@drawable/ic_keyboard_arrow_left_red_500_24dp" />
+            app:srcCompat="@drawable/arrow_1" />
 
     </LinearLayout>
 
@@ -39,7 +39,7 @@
             android:id="@+id/right_image_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:srcCompat="@drawable/ic_keyboard_arrow_right_red_500_24dp" />
+            app:srcCompat="@drawable/arrow_2" />
     </LinearLayout>
 
 </LinearLayout>

@@ -44,7 +44,6 @@ public class CalAdapter extends RecyclerView.Adapter<CalAdapter.MyViewHolder> {
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView day, date;
         public ImageView haveAppointment;
-        public View divider;
         public TextView indicator;
 
         public MyViewHolder(View view) {
@@ -52,8 +51,7 @@ public class CalAdapter extends RecyclerView.Adapter<CalAdapter.MyViewHolder> {
             day = view.findViewById(R.id.day);
             date = view.findViewById(R.id.date);
             haveAppointment = view.findViewById(R.id.have_appointment);
-            divider = view.findViewById(R.id.divider);
-            indicator = view.findViewById(R.id.indicator);
+             indicator = view.findViewById(R.id.indicator);
         }
     }
 
@@ -87,10 +85,10 @@ public class CalAdapter extends RecyclerView.Adapter<CalAdapter.MyViewHolder> {
         holder.date.setTag(position);
         dateArrayList.add(holder.date);
         dayArrayList.add(holder.day);
-        dividerArrayList.add(holder.divider);
+       // dividerArrayList.add(holder.divider);
         holder.day.setTextColor(context.getResources().getColor(color));
         holder.date.setTextColor(context.getResources().getColor(color));
-        holder.divider.setBackgroundColor(context.getResources().getColor(color));
+       // holder.divider.setBackgroundColor(context.getResources().getColor(color));
         if (dayModelList.get(position).isIndicator) {
             holder.indicator.setVisibility(View.VISIBLE);
         } else

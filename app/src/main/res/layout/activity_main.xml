@@ -12,7 +12,7 @@
         android:id="@+id/month"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/mtrl_btn_transparent_bg_color"
         android:gravity="center_horizontal"
         android:padding="8dp"
         android:text="Current Month"
