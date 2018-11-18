@@ -49,21 +49,23 @@ public class CalAdapter extends RecyclerView.Adapter<CalAdapter.MyViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(final MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
         char t = dayModelList.get(position).day.charAt(0);
 
         if (dayModelList.get(position).isToday == true) {
             holder.date.setBackground(context.getResources().getDrawable(R.drawable.currect_date_background));
-            try {
-                CallBack cb = new CallBack(toCallBack, "newDateSelected");
-                cb.invoke(dayModelList.get(position));
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
-            }
+            if (dayModelList.get(position).isSelected)
+                try {
+                    dayModelList.get(position).isSelected = false;
+                    CallBack cb = new CallBack(toCallBack, "newDateSelected");
+                    cb.invoke(dayModelList.get(position));
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                }
         }
 
         holder.day.setText(t + " ");
@@ -75,7 +77,7 @@ public class CalAdapter extends RecyclerView.Adapter<CalAdapter.MyViewHolder> {
         // holder.day.setTextColor(context.getResources().getColor(color));
         holder.date.setTextColor(context.getResources().getColor(color));
         // holder.divider.setBackgroundColor(context.getResources().getColor(color));
-        if (dayModelList.get(position).isSelected) {
+        if (dayModelList.get(position).isSelected && !dayModelList.get(position).isToday) {
             holder.date.setTextColor(context.getResources().getColor(R.color.clicked_day_text_color));
             holder.date.setBackground(context.getResources().getDrawable(R.drawable.background_selected_day));
             holder.date.setTextColor(context.getResources().getColor(R.color.clicked_day_text_color));
@@ -87,34 +89,29 @@ public class CalAdapter extends RecyclerView.Adapter<CalAdapter.MyViewHolder> {
         holder.date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int pos = Integer.valueOf(v.getTag().toString());
                 if (clickedTextView == null) {
                     clickedTextView = (TextView) v;
                     clickedTextView.setBackground(context.getResources().getDrawable(R.drawable.background_selected_day));
                     clickedTextView.setTextColor(context.getResources().getColor(R.color.clicked_day_text_color));
-                    dayModelList.get(pos).isSelected = true;
+                    dayModelList.get(position).isSelected = true;
                     clickedTextView.setTypeface(clickedTextView.getTypeface(), Typeface.NORMAL);
                 } else {
-//                    if(!dayModelList.get(pos).isToday) {
-                    if (lastDaySelected != null && lastDaySelected.isToday) {
-                        clickedTextView.setBackground(context.getResources().getDrawable(R.drawable.currect_date_background));
-                        clickedTextView.setTextColor(context.getResources().getColor(R.color.white));
-                        clickedTextView.setTypeface(clickedTextView.getTypeface(), Typeface.NORMAL);
-                    } else {
-                        clickedTextView.setBackground(null);
-                        // clickedTextView.setTextColor(context.getResources().getColor(R.color.grayTextColor));
-                        dayModelList.get(pos).isSelected = true;
-                        clickedTextView.setTypeface(clickedTextView.getTypeface(), Typeface.NORMAL);
-                    }
+//
                     clickedTextView = (TextView) v;
                     clickedTextView.setBackground(context.getResources().getDrawable(R.drawable.background_selected_day));
                     clickedTextView.setTextColor(context.getResources().getColor(R.color.clicked_day_text_color));
+                    dayModelList.get(position).isSelected = true;
                     clickedTextView.setTypeface(clickedTextView.getTypeface(), Typeface.NORMAL);
                 }
-                notifyDataSetChanged();
+//                    clickedTextView = (TextView) v;
+//                    clickedTextView.setBackground(context.getResources().getDrawable(R.drawable.background_selected_day));
+//                    clickedTextView.setTextColor(context.getResources().getColor(R.color.clicked_day_text_color));
+//                    clickedTextView.setTypeface(clickedTextView.getTypeface(), Typeface.NORMAL);
+
+
                 try {
                     CallBack cb = new CallBack(toCallBack, "newDateSelected");
-                    cb.invoke(dayModelList.get(pos));
+                    cb.invoke(dayModelList.get(position));
                 } catch (InvocationTargetException e) {
                     e.printStackTrace();
                 } catch (IllegalAccessException e) {
@@ -122,8 +119,8 @@ public class CalAdapter extends RecyclerView.Adapter<CalAdapter.MyViewHolder> {
                 } catch (NoSuchMethodException e) {
                     e.printStackTrace();
                 }
-                lastDaySelected = dayModelList.get(pos);
-
+                lastDaySelected = dayModelList.get(position);
+                notifyDataSetChanged();
 
             }
         });
