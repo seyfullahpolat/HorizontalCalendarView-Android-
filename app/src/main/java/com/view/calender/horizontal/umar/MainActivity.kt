@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity(), HorizontalCalendarListener {
     }
 
     override fun newDateSelected(selectedDate: DayDateMonthYearModel?) {
-        Toast.makeText(this@MainActivity, selectedDate?.date + "" + selectedDate?.month + " " + selectedDate?.year, Toast.LENGTH_LONG).show()
+        Toast.makeText(this@MainActivity, selectedDate?.date + " " + selectedDate?.monthNumeric + " " + selectedDate?.year, Toast.LENGTH_LONG).show()
     }
 
 }

@@ -213,6 +213,7 @@ public class HorizontalCalendarView extends LinearLayout {
                 currentDayMode.year = partsNextDate[2];
                 currentDayMode.isToday = false;
                 currentDayMode.isIndicator = false;
+                currentDayMode.monthNumeric = partsNextDate[3];
 
                 if (i % 3 == 0)
                     currentDayMode.isIndicator = false;
